@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<>, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .btn-outline-dark {
+            border: 2px solid #000000;
+            box-shadow: 4px 4px #000000;
+            transition: all 0.4s;
+        }
+
+        .btn-outline-dark:hover {
+            box-shadow: 4px 4px #f5a841;
+        }
+
+        .btn-outline-dark:active {
+            box-shadow: 4px 4px #f5a841;
+            transform: translateY(3px);
+        }
+
+        .blur {
+            filter: blur(6px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .card.shadow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+
+            max-height: 90vh;
+            /* 👈 limit height to 90% of the screen */
+            overflow-y: auto;
+            /* 👈 enable vertical scrolling */
+            display: none;
+        }
+        .dark-bg {
+        background-color: #000000d1 !important;
+        color: white;
+    }
+    </style>
+
+    <title>🏢Employee information form</title>
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5 col-sm" id="background">
+
+        <div class="text-center mb-3">
+            <button class="btn btn-outline-dark" onclick="toggleform()">Click here to show/hide the form</button>
+        </div>
+
+        <div class="card shadow p-4 col-sm  " id="employeeform" style="display: none;">
+            <h2 class="text-center mb-4">Add New Employee</h2>
+            <form action="add_details" method="POST">
+                {% csrf_token %}
+                <div class="mb-3 col-sm">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name" required>
+                </div>
+
+                <div class="mb-3 col-sm">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="join" placeholder="Enter date of birth" name="dob"
+                        required>
+                </div>
+
+                <div class="mb-3 col-sm">
+                    <label for="phone" class="form-label">Mobile Number</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Enter Phone" name="phone" required>
+                </div>
+
+
+                <div class="mb-3 col-sm">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else
+                        expect company officials if required.</small>
+                </div>
+
+                <div class="mb-3 col-sm">
+                    <label class="form-label">Gender</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male" required>
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="other" value="Other">
+                        <label class="form-check-label" for="other">Other</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Street Address -->
+                    <div class="mb-3 col-md-6">
+                        <label for="street" class="form-label">Street Address</label>
+                        <input type="text" class="form-control" id="street" name="street"
+                            placeholder="e.g., 123 Main Street" required>
+                    </div>
+
+                    <!-- City -->
+                    <div class="mb-3 col-md-6">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="e.g., Chennai"
+                            required>
+                    </div>
+
+                    <!-- State -->
+                    <div class="mb-3 col-md-6">
+                        <label for="state" class="form-label">State</label>
+                        <input type="text" class="form-control" id="state" name="state" placeholder="e.g., Tamil Nadu"
+                            required>
+                    </div>
+
+                    <!-- ZIP / Postal Code -->
+                    <div class="mb-3 col-md-6">
+                        <label for="zip" class="form-label">ZIP / Postal Code</label>
+                        <input type="text" class="form-control" id="zip" name="zip" placeholder="e.g., 600001" required>
+                    </div>
+                </div>
+
+                <div class="mb-3 col-sm">
+                    <label for="department" class="form-label">Department</label>
+                    <input type="text" class="form-control" id="department" placeholder="Enter Department"
+                        name="department" required>
+                    <small id="emailHelp" class="form-text text-muted">Which department you are currently
+                        working</small>
+                </div>
+
+                <div class="mb-3 col-sm">
+                    <label for="designation" class="form-label">Designation</label>
+                    <input type="text" class="form-control" id="department" placeholder="Enter Department"
+                        name="designation" required>
+                    <small id="emailHelp" class="form-text text-muted">Which field you are currently working</small>
+                </div>
+
+                <div class="mb-3 col-sm">
+                    <label for="salary" class="form-label">Salary</label>
+                    <input type="number" class="form-control" id="salary" placeholder="Enter Salary" name="salary"
+                        required>
+                    <small id="emailHelp" class="form-text text-muted">mention your salary in CTC</small>
+                </div>
+
+                <div class="mb-3 col-sm">
+                    <label for="experience" class="form-label">Year of Experience</label>
+                    <input type="text" class="form-control" id="experience" placeholder="Enter Experience"
+                        name="experience" required>
+                </div>
+
+                <div class="mb-3 col-sm">
+                    <label for="join" class="form-label">Date of Join</label>
+                    <input type="date" class="form-control" id="join" placeholder="joining date" name="join" required>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <input type="submit" class="btn btn-success" value="Add Employee">
+                </div>
+            </form>
+            <br>
+            <form action="show_details" method="GET">
+                <div class="d-flex justify-content-center">
+                    <input type="submit" class="btn btn-primary" value="Show Employee">
+                </div>
+            </form>
+            <script>
+
+                function toggleform() {
+                    const formDiv = document.getElementById("employeeform");
+                    const body = document.body;
+
+                    const isHidden = formDiv.style.display === "none" || formDiv.style.display === "";
+
+                    if (isHidden) {
+                        formDiv.style.display = "block";
+                        body.classList.add("dark-bg");
+                    } else {
+                        formDiv.style.display = "none";
+                        body.classList.remove("dark-bg");
+                    }
+                }
+
+            </script>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

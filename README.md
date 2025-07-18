@@ -19,7 +19,7 @@ This is a simple yet functional Employee Management System built using Django an
 🛠️ Tech Stack
 Backend: Django (Python)
 
-Frontend: HTML, CSS, Bootstrap 5
+Frontend: HTML, CSS, Bootstrap 5 ,Javascript
 
 Database: SQLite (default Django DB)
 
